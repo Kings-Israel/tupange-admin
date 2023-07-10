@@ -1,6 +1,7 @@
 @extends('layouts.app')
-{{-- page header --}}
+
 @section('title','Vendor Details')
+
 @section('breadcrumb')
    <div class="content-header row">
       <div class="content-header-left col-md-6 col-12 mb-2 breadcrumb-new">
@@ -18,7 +19,7 @@
       <div class="content-header-right col-md-6 col-12"></div>
    </div>
 @endsection
-{{-- content section --}}
+
 @section('content')
    @include('partials._messages')
    <div class="row">
@@ -36,7 +37,7 @@
             <a class="flex-sm-fill text-sm-center nav-link" href="{!! route('vendors.orders',$details->id) !!}">Orders</a>
          </nav>
          <div class="card">
-            <div class="card-header">All Vendor services Information</div>
+            <div class="card-header">All Vendor Services Information</div>
             <div class="card-body">
                <table class="table table-striped table-bordered zero-configuration">
                   <thead>
@@ -47,6 +48,7 @@
                         <th>Customer</th>
                         <th>Order Date</th>
                         <th>Status</th>
+                        <th>Paid</th>
                      </tr>
                   </thead>
                   <tbody>
@@ -64,6 +66,9 @@
                            <td>{!! $item->user->f_name !!} {!! $item->user->l_name !!}</td>
                            <td>{!! date('F jS, Y', strtotime($item->created_at)) !!}</td>
                            <td><span class="badge">{!! $item->status !!}</span></td>
+                           <td>
+                              <input type="checkbox" {{ $item->paid ? 'checked' : '' }} >
+                           </td>
                         </tr>
                      @endforeach
                   </tbody>
@@ -73,7 +78,7 @@
       </div>
    </div>
 @endsection
-{{-- page scripts --}}
-@section('script')
 
+@section('script')
+   <!-- Add any necessary JavaScript code here -->
 @endsection

@@ -36,7 +36,7 @@
             @foreach($payments as $count=>$payment)
                <tr>
                   <td>{!! $count+1 !!}</td>
-                  <td>{!! $payment->order->order_id !!}</td>
+                  <td>{!! $payment->order ? $payment->order->order_id : '' !!}</td>
                   <td>Ksh {!! number_format($payment->amount) !!}</td>
                   <td>{!! $payment->user->f_name !!} {!! $payment->user->l_name !!}</td>
                   <td>{!! $payment->payment_method !!}</td>

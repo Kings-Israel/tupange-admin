@@ -54,17 +54,39 @@
                         <tr>
                            <td>{!! $count+1 !!}</td>
                            <td><img src="{{ config('services.app_url.url').'/storage/vendor/logo/'.$vendor->company_logo }}" alt="{{ $vendor->company_name }}" class="img-fluid" width="30px" height="30px"></td>
-                           <td><a href="#">{{ $vendor->company_name }}</a></td>
+                           <td>
+                              <a href="#">{{ $vendor->company_name }}</a>  <br>
+                              @if ($vendor->status === 'Suspended')
+                              <span class="badge-danger" style="padding: 0 5px; color: white; border-radius: 50px; cursor: pointer">Suspended</span>
+                              @else
+                              <span class="badge-success" style="padding: 0 5px; color: white; border-radius: 50px; cursor: pointer">Active</span>
+                              @endif
+                        
+                        </td>
                            <td>{{ $vendor->company_email }}</td>
                            <td>{{ $vendor->company_phone_number }}</td>
                            <td>{{ $vendor->services->count() }}</td>
                            <td>
-                              <a href="{!! route('vendors.details',$vendor->id) !!}" class="btn btn-warning btn-sm">View</a>
-                              @if ($vendor->status === 'Suspended')
-                                 <a href="{!! route('vendors.status',$vendor->id) !!}" class="btn btn-success btn-sm">Activate</a>
-                              @else
-                                 <a href="{!! route('vendors.status',$vendor->id) !!}" class="btn btn-danger btn-sm">Suspend</a>
-                              @endif
+                              <div class="dropdown">
+                                 <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton{{ $vendor->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Actions
+                                 </button>
+                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ $vendor->id }}">
+                                 <a class="dropdown-item" href="{!! route('vendors.details',$vendor->id) !!}">View</a>
+                                    @if ($vendor->status === 'Suspended')
+                                       <a class="dropdown-item" href="{!! route('vendors.status',$vendor->id) !!}">Activate</a>
+                                    @else
+                                       <a class="dropdown-item" href="{!! route('vendors.status',$vendor->id) !!}">Suspend</a>
+                                    @endif
+                                    
+                                    <!-- Delete Button -->
+                                    <form action="{{ route('vendors.destroy', $vendor->id) }}" method="POST" style="display: inline;">
+                                       @csrf
+                                       @method('DELETE')
+                                       <button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to delete this vendor?')">Delete</button>
+                                    </form>
+                                 </div>
+                              </div>
                            </td>
                         </tr>
                      @endforeach

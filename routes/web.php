@@ -39,6 +39,8 @@ Route::middleware('auth','verified')->group(function(){
    Route::get('vendors/{id}/services',['uses' => 'modules\vendorsController@services','as' => 'vendors.services']);
    Route::get('vendors/{id}/orders',['uses' => 'modules\vendorsController@orders','as' => 'vendors.orders']);
    Route::get('vendors/{id}/status',['uses' => 'modules\vendorsController@status','as' => 'vendors.status']);
+   Route::delete('/vendors/{id}', 'modules\vendorsController@destroy')->name('vendors.destroy');
+
 
    /*
    * orders
@@ -70,6 +72,17 @@ Route::middleware('auth','verified')->group(function(){
    * services
    */
    Route::get('services',['uses' => 'modules\servicesController@index','as' => 'services.index']);
+   Route::get('/services/create', 'modules\servicesController@create')->name('services.create');
+   Route::post('/services', 'modules\servicesController@store')->name('services.store');
+   Route::get('/services/{service}/edit', 'modules\servicesController@edit')->name('services.edit');
+   Route::put('/services/{service}', 'modules\servicesController@update')->name('services.update');
+   Route::delete('/services/{service}', 'modules\servicesController@destroy')->name('services.destroy');
+   Route::get('/services/{service}/feature', 'modules\servicesController@feature')->name('services.feature');
+   Route::get('/services/{service}/unfeature', 'modules\servicesController@unfeature')->name('services.unfeature');
+   Route::get('/services/{service}/disable', 'modules\servicesController@disable')->name('services.disable');
+   Route::get('/services/{service}/activate', 'modules\servicesController@activate')->name('services.activate');
+
+
 
    /*
    * reviews

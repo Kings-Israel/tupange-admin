@@ -51,4 +51,20 @@ class vendorsController extends Controller
 
       return redirect()->back();
    }
+
+      // Delete vendor
+      public function destroy($id)
+      {
+          $vendor = Vendors::find($id);
+          if (!$vendor) {
+              Session::flash('error', 'Vendor not found');
+              return redirect()->back();
+          }
+  
+          $vendor->delete();
+  
+          Session::flash('success', 'Vendor deleted successfully');
+  
+          return redirect()->route('vendors.index');
+      }
 }

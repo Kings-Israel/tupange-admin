@@ -5,8 +5,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Services extends Model
 {
-    Protected $table = 'services';
+    protected $table = 'services';
 
+    protected $fillable = [
+        'service_title',
+        'category_id',
+        'orders_count',
+        'service_contact_email',
+        'service_contact_phone_number',
+        'vendor_id',
+        'featured',
+    ];
     /**
      * Get the category that owns the Services
      *

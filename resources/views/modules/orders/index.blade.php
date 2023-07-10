@@ -55,8 +55,8 @@
                            <td>{!! $item->user->f_name !!} {!! $item->user->l_name !!}</td>
                            <td>{!! date('F jS, Y', strtotime($item->created_at)) !!}</td>
                            <td>
-                              {!! $item->service->service_title !!}<br>
-                              <i><b>{!! $item->service->vendor->company_name !!}</b></i>
+                              {!! $item ? $item->service_title : '' !!}<br>
+                              <i><b>{!! $item->service->vendor->company_name ?? '' !!}</b></i>
                            </td>
                            <td>
                               <span class="badge">{!! $item->status !!}</span>

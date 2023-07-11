@@ -41,32 +41,35 @@
                   <tbody>
                      <?php $__currentLoopData = $orders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $count=>$item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
-                           <td><?php echo $count+1; ?></td>
-                           <td><?php echo $item->order_id; ?></td>
-                           <?php if($item->service_pricing): ?>
-                              <td><?php echo e($item->service_pricing->service_pricing_title); ?> <strong style="display: flex;">(Ksh. <p><?php echo e(number_format($item->service_pricing->service_pricing_price)); ?></p>)</strong></td>
-                           <?php elseif($item->order_quotation): ?>
-                              <td><?php echo e($item->order_quotation->order_pricing_title); ?> <strong style="display: flex;">(Ksh. <p><?php echo e(number_format($item->order_quotation->order_pricing_price)); ?></p>)</strong></td>
-                           <?php else: ?>
-                              <td>Awaiting Quote</td>
-                           <?php endif; ?>
-                           <td><?php echo $item->user->f_name; ?> <?php echo $item->user->l_name; ?></td>
-                           <td><?php echo date('F jS, Y', strtotime($item->created_at)); ?></td>
-                           <td>
-                              <?php echo $item ? $item->service_title : ''; ?><br>
-                              <i><b><?php echo $item->service->vendor->company_name ?? ''; ?></b></i>
-                           </td>
-                           <td>
-                              <span class="badge"><?php echo $item->status; ?></span>
-                           </td>
-                           <td>
-                              <a href="<?php echo e(route('orders.details', $item->id)); ?>">
-                                 <span class="badge-success" style="padding: 0 5px; color: white; border-radius: 3px; cursor: pointer">View</span>
-                              </a>
-                           </td>
+                              <td><?php echo $count+1; ?></td>
+                              <td><?php echo $item->order_id; ?></td>
+                              <td>
+                                 <?php if($item->service_pricing): ?>
+                                    <?php echo e($item->service_pricing->service_pricing_title); ?> <strong style="display: flex;">(Ksh. <p><?php echo e(number_format($item->service_pricing->service_pricing_price)); ?></p>)</strong>
+                                 <?php elseif($item->order_quotation): ?>
+                                    <?php echo e($item->order_quotation->order_pricing_title); ?> <strong style="display: flex;">(Ksh. <p><?php echo e(number_format($item->order_quotation->order_pricing_price)); ?></p>)</strong>
+                                 <?php else: ?>
+                                    Awaiting Quote
+                                 <?php endif; ?>
+                              </td>
+                              <td><?php echo $item->user ? $item->user->f_name : 'N/A'; ?> <?php echo $item->user ? $item->user->l_name : ''; ?></td>
+                              <td><?php echo $item->created_at ? date('F jS, Y', strtotime($item->created_at)) : 'N/A'; ?></td>
+                              <td>
+                                 <?php echo $item->service ? $item->service->service_title : 'N/A'; ?><br>
+                                 <i><b><?php echo $item->service && $item->service->vendor ? $item->service->vendor->company_name : 'N/A'; ?></b></i>
+                              </td>
+                              <td>
+                                 <span class="badge"><?php echo $item->status; ?></span>
+                              </td>
+                              <td>
+                                 <a href="<?php echo e(route('orders.details', $item->id)); ?>">
+                                    <span class="badge-success" style="padding: 0 5px; color: white; border-radius: 3px; cursor: pointer">View</span>
+                                 </a>
+                              </td>
                         </tr>
                      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                   </tbody>
+
                </table>
             </div>
          </div>

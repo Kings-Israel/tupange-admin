@@ -63,9 +63,11 @@
                            @else
                               <td>Awaiting Quote</td>
                            @endif
-                           <td>{!! $item->user->f_name !!} {!! $item->user->l_name !!}</td>
-                           <td>{!! date('F jS, Y', strtotime($item->created_at)) !!}</td>
-                           <td><span class="badge">{!! $item->status !!}</span></td>
+                           <td>{!! $item->user ? $item->user->f_name : 'N/A' !!} {!! $item->user ? $item->user->l_name : '' !!}</td>
+                           <td>{!! $item->created_at ? date('F jS, Y', strtotime($item->created_at)) : 'N/A' !!}</td>
+                           <td>
+                              <span class="badge">{!! $item->status !!}</span>
+                           </td>
                            <td>
                               <input type="checkbox" {{ $item->paid ? 'checked' : '' }} >
                            </td>

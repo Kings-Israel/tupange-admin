@@ -61,9 +61,11 @@
                            <?php else: ?>
                               <td>Awaiting Quote</td>
                            <?php endif; ?>
-                           <td><?php echo $item->user->f_name; ?> <?php echo $item->user->l_name; ?></td>
-                           <td><?php echo date('F jS, Y', strtotime($item->created_at)); ?></td>
-                           <td><span class="badge"><?php echo $item->status; ?></span></td>
+                           <td><?php echo $item->user ? $item->user->f_name : 'N/A'; ?> <?php echo $item->user ? $item->user->l_name : ''; ?></td>
+                           <td><?php echo $item->created_at ? date('F jS, Y', strtotime($item->created_at)) : 'N/A'; ?></td>
+                           <td>
+                              <span class="badge"><?php echo $item->status; ?></span>
+                           </td>
                            <td>
                               <input type="checkbox" <?php echo e($item->paid ? 'checked' : ''); ?> >
                            </td>

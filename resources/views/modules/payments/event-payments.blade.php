@@ -13,6 +13,7 @@
             </div>
          </div>
       </div>
+      
       <div class="content-header-right col-md-6 col-12"></div>
    </div>
 @endsection

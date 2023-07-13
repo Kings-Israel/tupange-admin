@@ -46,7 +46,7 @@
                         <th>Customer</th>
                         <th>Order Date</th>
                         <th>Status</th>
-                        <th>Paid</th>
+                        <th>Action</th>
                      </tr>
                   </thead>
                   <tbody>
@@ -64,10 +64,28 @@
                            <td><?php echo $item->user ? $item->user->f_name : 'N/A'; ?> <?php echo $item->user ? $item->user->l_name : ''; ?></td>
                            <td><?php echo $item->created_at ? date('F jS, Y', strtotime($item->created_at)) : 'N/A'; ?></td>
                            <td>
-                              <span class="badge"><?php echo $item->status; ?></span>
+                              <!-- <span class="badge"><?php echo $item->status; ?></span> -->
+                              <?php if($item->payment_status == 1): ?>
+                                 <span class="badge-success" style="padding: 0 5px; color: white; border-radius: 50px; cursor: pointer">Paid</span>
+                              <?php else: ?>
+                                 <span class="badge-warning" style="padding: 0 5px; color: white; border-radius: 50px; cursor: pointer">Not Paid</span>
+                              <?php endif; ?>
                            </td>
+                           
                            <td>
-                              <input type="checkbox" <?php echo e($item->paid ? 'checked' : ''); ?> >
+                              <div class="dropdown">
+                                 <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton<?php echo e($item->id); ?>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Actions
+                                 </button>
+                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton<?php echo e($item->id); ?>">
+                                 <?php if($item->payment_status == 1): ?>
+                                    <a class="dropdown-item" href="<?php echo e(route('markAsNotPaid', $item->id)); ?>">Not Paid</a>
+                                 <?php else: ?>
+                                    <a class="dropdown-item" href="<?php echo e(route('markAsPaid', $item->id)); ?>">Paid</a>
+                                 <?php endif; ?>
+
+                                 </div>
+                              </div>
                            </td>
                         </tr>
                      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

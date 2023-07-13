@@ -65,12 +65,6 @@
                               </td>
 
                               <td>
-                                 <span class="badge">{!! $item->status !!}</span>
-                              </td> modify the above code to return status of the order not the status of the user
-
-
-                              
-                              <td>
                                  <a href="{{ route('orders.details', $item->id) }}">
                                     <span class="badge-success" style="padding: 0 5px; color: white; border-radius: 3px; cursor: pointer">View</span>
                                  </a>

@@ -61,6 +61,7 @@
                               <td>
                                  <span class="badge"><?php echo $item->status; ?></span>
                               </td>
+
                               <td>
                                  <a href="<?php echo e(route('orders.details', $item->id)); ?>">
                                     <span class="badge-success" style="padding: 0 5px; color: white; border-radius: 3px; cursor: pointer">View</span>

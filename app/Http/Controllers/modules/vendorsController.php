@@ -32,13 +32,44 @@ class vendorsController extends Controller
    //orders
    public function orders($id){
       $details = Vendors::find($id);
-      $orders = Orders::join('services','services.id','=','orders.service_id')
-                        ->join('users','users.id','=','orders.user_id')
-                     ->where('vendor_id',$id)
-                     ->orderby('orders.id','desc')
-                     ->get();
+      $orders = Orders::join('services', 'services.id', '=', 'orders.service_id')
+                       ->join('users', 'users.id', '=', 'orders.user_id')
+                       ->where('vendor_id', $id)
+                       ->orderBy('orders.id', 'desc')
+                       ->select('orders.*', 'services.status as order_status') // Select the status of the order
+                       ->get();
+   
+      return view('modules.vendors.orders', compact('details', 'orders'));
+   }
 
-      return view('modules.vendors.orders', compact('details','orders'));
+   public function markAsPaid($orderId)
+   {
+      $order = Orders::find($orderId);
+      if ($order) {
+         $order->status = 'Paid';
+         $order->payment_status = 1;
+         $order->save();
+         Session::flash('success', 'Order status changed');
+   
+         return redirect()->back();
+      }
+   }
+
+   public function markAsNotPaid($orderId)
+   {
+       $order = Orders::find($orderId);
+
+       if (!$order) {
+         return redirect()->back();
+       }
+
+       // Update the payment_status to "Not Paid" (0)
+       $order->payment_status = 0;
+       $order->save();
+
+       Session::flash('success', 'Order status changed');
+   
+       return redirect()->back();
    }
 
    //status

@@ -48,7 +48,7 @@
                         <th>Customer</th>
                         <th>Order Date</th>
                         <th>Status</th>
-                        <th>Paid</th>
+                        <th>Action</th>
                      </tr>
                   </thead>
                   <tbody>
@@ -66,10 +66,28 @@
                            <td>{!! $item->user ? $item->user->f_name : 'N/A' !!} {!! $item->user ? $item->user->l_name : '' !!}</td>
                            <td>{!! $item->created_at ? date('F jS, Y', strtotime($item->created_at)) : 'N/A' !!}</td>
                            <td>
-                              <span class="badge">{!! $item->status !!}</span>
+                              <!-- <span class="badge">{!! $item->status !!}</span> -->
+                              @if($item->payment_status == 1)
+                                 <span class="badge-success" style="padding: 0 5px; color: white; border-radius: 50px; cursor: pointer">Paid</span>
+                              @else
+                                 <span class="badge-warning" style="padding: 0 5px; color: white; border-radius: 50px; cursor: pointer">Not Paid</span>
+                              @endif
                            </td>
+                           
                            <td>
-                              <input type="checkbox" {{ $item->paid ? 'checked' : '' }} >
+                              <div class="dropdown">
+                                 <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton{{ $item->id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Actions
+                                 </button>
+                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ $item->id }}">
+                                 @if($item->payment_status == 1)
+                                    <a class="dropdown-item" href="{{ route('markAsNotPaid', $item->id) }}">Not Paid</a>
+                                 @else
+                                    <a class="dropdown-item" href="{{ route('markAsPaid', $item->id) }}">Paid</a>
+                                 @endif
+
+                                 </div>
+                              </div>
                            </td>
                         </tr>
                      @endforeach

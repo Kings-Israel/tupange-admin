@@ -40,7 +40,9 @@ Route::middleware('auth','verified')->group(function(){
    Route::get('vendors/{id}/orders',['uses' => 'modules\vendorsController@orders','as' => 'vendors.orders']);
    Route::get('vendors/{id}/status',['uses' => 'modules\vendorsController@status','as' => 'vendors.status']);
    Route::delete('/vendors/{id}', 'modules\vendorsController@destroy')->name('vendors.destroy');
-
+   Route::get('orders/mark-as-paid/{id}', 'modules\vendorsController@markAsPaid')->name('markAsPaid');
+   Route::get('orders/mark-as-not-paid/{id}', 'modules\vendorsController@markAsNotPaid')->name('markAsNotPaid');
+   
 
    /*
    * orders

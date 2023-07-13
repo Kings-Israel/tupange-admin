@@ -68,7 +68,7 @@
                               <?php if($item->payment_status == 1): ?>
                                  <span class="badge-success" style="padding: 0 5px; color: white; border-radius: 50px; cursor: pointer">Paid</span>
                               <?php else: ?>
-                                 <span class="badge-warning" style="padding: 0 5px; color: white; border-radius: 50px; cursor: pointer">Not Paid</span>
+                                 <span class="badge-warning" style="padding: 0 5px; color: white; border-radius: 50px; cursor: pointer">Unpaid</span>
                               <?php endif; ?>
                            </td>
                            

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Vendors;
 use App\Models\Services;
 use App\Models\Orders;
+use App\Models\User;
 use Session;
 class vendorsController extends Controller
 {
@@ -73,15 +74,26 @@ class vendorsController extends Controller
    }
 
    //status
-   public function status($id){
-      $details = Vendors::find($id);
-      $details->status = $details->status === 'Suspended' ? 'Active' : 'Suspended';
-      $details->save();
-
-      Session::flash('success','Vendor status changed');
-
-      return redirect()->back();
+   public function status($id)
+   {
+       $vendor = Vendors::find($id);
+   
+       // Update vendor status
+       $vendor->status = $vendor->status === 'Suspended' ? 'Active' : 'Suspended';
+       $vendor->save();
+   
+       // Update related user status
+       $user = User::find($vendor->user_id);
+       if ($user) {
+           $user->is_suspended = $vendor->status === 'Suspended' ? 1 : 0;
+           $user->save();
+       }
+   
+       Session::flash('success', 'Vendor status changed');
+   
+       return redirect()->back();
    }
+   
 
       // Delete vendor
       public function destroy($id)

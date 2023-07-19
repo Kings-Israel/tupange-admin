@@ -9,6 +9,7 @@ use App\Models\FooterContent;
 use App\Models\AboutUsContent;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Redirect;
 
 class ContentController extends Controller
 {
@@ -170,11 +171,11 @@ class ContentController extends Controller
    public function deleteFaq($id)
    {
       $faq = Faq::find($id);
-
+   
       $faq->delete();
-
+   
       Session::flash('success', 'FAQ deleted');
-
-      return redirect()->back();
+   
+      return Redirect::route('content.faqs');
    }
 }
